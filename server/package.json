@@ -2,7 +2,6 @@
   "name": "user-management-system",
   "version": "1.0.0",
   "description": "its for managing the user data",
-  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js"
