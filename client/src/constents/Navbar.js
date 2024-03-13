@@ -15,7 +15,7 @@ function NavbarComponent() {
     if (document.cookie) {
       dispatch(userLoggedIn(true));
     }
-  }, []);
+  }, [dispatch]);
 
   const logoutHandler = () => {
     signOut();

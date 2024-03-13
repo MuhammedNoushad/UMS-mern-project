@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
 import { useToast } from "./Toaster";
-import { useDispatch, useSelector } from "react-redux";
 import { setData } from "../store/usersDataSlice";
 
 // Function to fetch data from the server
@@ -19,6 +19,7 @@ const fetchData = async (dispatch) => {
 function Table() {
   const showToast = useToast();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const users = useSelector((state) => state.users.data);
 
@@ -42,8 +43,13 @@ function Table() {
     }
   };
 
+  // Edit userData in the database
+  const userEditHandler = async (id) => {
+    navigate(`/admin/edit_user/${id}`);
+  };
+
   const tableData = users.length ? (
-    <table className="table table-striped table-bordered ">
+    <table className="table table-striped table-bordered">
       <thead>
         <tr>
           <th>Name</th>
@@ -59,7 +65,14 @@ function Table() {
             <td>{row.email}</td>
             <td>{row.phone_number}</td>
             <td className="d-flex justify-content-between">
-              <Button variant="outline-warning">Edit</Button>
+              <Button
+                variant="outline-warning"
+                onClick={() => {
+                  userEditHandler(row._id);
+                }}
+              >
+                Edit
+              </Button>
               <span className="mx-2"></span>
               <Button
                 variant="outline-danger"
@@ -76,12 +89,12 @@ function Table() {
     </table>
   ) : (
     <div className="d-flex justify-content-center align-items-center">
-    <img
-      className="m-b-3"
-      src="https://i.pinimg.com/564x/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.jpg"
-      alt="placeholder"
-    />
-  </div>
+      <img
+        className="m-b-3"
+        src="https://i.pinimg.com/564x/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.jpg"
+        alt="placeholder"
+      />
+    </div>
   );
 
   return (

@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import Profile from "./Profile";
+import { Container } from "react-bootstrap";
 
 function Home() {
   return (
-    <div className='m-4 p-4'>Welcome to our website 🥰. </div>
-  )
+    <Container className="d-flex justify-content-center align-items-center">
+      <Profile />
+    </Container>
+  );
 }
 
-export default Home
+export default Home;

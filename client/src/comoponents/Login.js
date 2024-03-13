@@ -61,7 +61,7 @@ function Login() {
           if (res.data.isAdmin) {
             navigate("/admin");
           } else {
-            navigate("/");
+            navigate(`/${res.data.data._id}`);
           }
         } else {
           showToast(res.data.message, "error");

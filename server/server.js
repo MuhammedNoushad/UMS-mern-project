@@ -1,8 +1,9 @@
 const express = require("express");
-const cookieParser = require('cookie-parser')
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const path = require("path"); // Import the 'path' module
 const userRoute = require("./routes/userRoute.js");
 const adminRoute = require("./routes/adminRoute.js");
 
@@ -11,8 +12,10 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors());
+app.use('/', express.static(path.join(__dirname, '/public')));
 app.use("/", userRoute);
 app.use("/admin", adminRoute);
 

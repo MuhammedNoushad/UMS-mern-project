@@ -59,7 +59,35 @@ const loginUser = async (req, res) => {
       res.status(401).json({ success: false, message: "Incorrect password." });
     }
   } catch (error) {
-    console.log(error.message);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+
+// To edit user profile
+const editProfile = async (req, res) => {
+  try {
+    const data = req.body;
+    const file = req.file;
+
+    const user = await User.findById(data.id);
+
+    const image = file ? file.filename : user.image;
+
+    const userData = await User.findByIdAndUpdate(data.id, {
+      username: data.username,
+      email: data.email,
+      phone_number: data.phonenumber,
+      image: image,
+    });
+
+    if (userData) {
+      res
+        .status(200)
+        .json({ success: true, message: "User updated successfully." });
+    } else {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  } catch (error) {
     res.status(500).json({ success: false, message: "Server error." });
   }
 };
@@ -67,4 +95,5 @@ const loginUser = async (req, res) => {
 module.exports = {
   addNewUser,
   loginUser,
+  editProfile,
 };

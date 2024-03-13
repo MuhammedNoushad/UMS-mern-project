@@ -10,6 +10,8 @@ import Signup from "./comoponents/Signup";
 import { ToastProvider } from "./UI/Toaster";
 import AdminHome from "./comoponents/AdminHome";
 import { RequireAuth } from "react-auth-kit";
+import EditUser from "./comoponents/EditUser";
+import EditProfile from "./comoponents/EditProfile";
 
 function App() {
   return (
@@ -19,19 +21,36 @@ function App() {
         <Routes>
           <Route
             exact
-            path="/"
+            path="/:id"
             element={
               <RequireAuth loginPath="/login">
                 <Home />
               </RequireAuth>
             }
           />
+          <Route exact path="/" element={<RequireAuth loginPath="/login" />} />
           <Route
             exact
             path="/admin"
             element={
               <RequireAuth loginPath="/login">
                 <AdminHome />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/admin/edit_user/:id"
+            element={
+              <RequireAuth loginPath="/login">
+                <EditUser />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/edit_profile/:id"
+            element={
+              <RequireAuth loginPath="/login">
+                <EditProfile />
               </RequireAuth>
             }
           />

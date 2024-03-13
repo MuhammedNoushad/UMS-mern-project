@@ -57,8 +57,32 @@ const serchUser = async (req, res) => {
   }
 };
 
+// For edit the user in the database
+const editUser = async (req, res) => {
+  try {
+    const data = req.body;
+
+    const userData = await User.findByIdAndUpdate(data.id, {
+      username: data.username,
+      email: data.email,
+      phone_number: data.phonenumber,
+    });
+
+    if (userData) {
+      res
+        .status(200)
+        .json({ success: true, message: "User updated successfully." });
+    } else {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   fetchUser,
   deleteUser,
   serchUser,
+  editUser,
 };
